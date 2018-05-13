@@ -9,20 +9,16 @@ class ExcludeDeletedManager(models.Manager):
 
 
 class Asset(models.Model):
-    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, verbose_name='uuid')
-    name = models.CharField(max_length=100, verbose_name='Имя файла')
-    description = models.TextField(max_length=240, verbose_name='Описание')
-    file = models.FileField(upload_to='files/', null=True, blank=True, verbose_name='Файл')
-    dc = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
-    dm = models.DateTimeField(auto_now=True, verbose_name='Последнее изменение')
-    dd = models.DateTimeField(null=True, editable=False, verbose_name=u'Дата удаления')
+    uuid = models.UUIDField('uuid', default=uuid.uuid4, unique=True, editable=False)
+    name = models.CharField(max_length=100)
+    description = models.TextField(max_length=240)
+    file = models.FileField(upload_to='assets/', null=True, blank=True)
+    dc = models.DateTimeField(auto_now_add=True)
+    dm = models.DateTimeField(auto_now=True)
+    dd = models.DateTimeField(null=True, editable=False)
 
     objects = ExcludeDeletedManager()
     standard_objects = models.Manager()
-
-    class Meta:
-        verbose_name = 'Ресурс'
-        verbose_name_plural = 'Ресурсы'
 
     def __str__(self):
         return self.name
