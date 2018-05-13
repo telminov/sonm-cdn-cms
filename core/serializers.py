@@ -6,4 +6,4 @@ from core import models
 class AssetSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Asset
-        exclude = ['dd']
+        fields = '__all__'
