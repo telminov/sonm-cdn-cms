@@ -2,7 +2,6 @@
 # docker push gitlab.soft-way.biz:5010/sonm-cdn/cms
 
 FROM ubuntu:16.04
-MAINTAINER telminov <telminov@soft-way.biz>
 
 RUN apt-get clean && apt-get update && \
     apt-get install -y \
@@ -22,6 +21,7 @@ RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN pip3 install    django==2.0.5 \
                     django-bootstrap4==0.0.6 \
                     djangorestframework==3.8.2 \
+                    gunicorn==19.8.0 \
                     ipython
 
 COPY . /opt/cms
@@ -31,7 +31,7 @@ WORKDIR /opt/cms
 RUN cp project/local_settings.sample.py project/local_settings.py
 
 COPY supervisor/supervisord.conf /etc/supervisor/supervisord.conf
-COPY supervisor/prod.conf /etc/supervisor/conf.d/mis.conf
+COPY supervisor/prod.conf /etc/supervisor/conf.d/cms.conf
 
 WORKDIR /opt/cms
 
@@ -45,7 +45,6 @@ CMD test "$(ls /conf/local_settings.py)" || cp project/local_settings.sample.py 
     rm project/local_settings.py;  ln -s /conf/local_settings.py project/local_settings.py; \
     rm -rf static; ln -s /static static; \
     rm -rf media; ln -s /media media; \
-    ln -s /conf/pgpass ~/.pgpass; chmod 0600 ~/.pgpass; \
     python3 ./manage.py migrate; \
     python3 ./manage.py collectstatic --noinput; \
     npm install; rm -rf static/node_modules; mv node_modules static/; \
