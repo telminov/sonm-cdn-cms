@@ -26,7 +26,7 @@ class DownloadAsset(View):
                 file_name = os.path.basename(asset_file_path)
                 mime_type_guess = mimetypes.guess_type(file_name)
                 response = HttpResponse(file, content_type=mime_type_guess[0])
-                response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(asset_file_path)
+                response['Content-Disposition'] = 'attachment; filename=' + file_name
                 return response
 
         return Http404("{path} does not exist.".format(path=asset_file_path))
