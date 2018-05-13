@@ -15,7 +15,7 @@ class Asset(models.Model):
     file = models.FileField(upload_to='files/', null=True, blank=True, verbose_name='Файл')
     dc = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     dm = models.DateTimeField(auto_now=True, verbose_name='Последнее изменение')
-    dd = models.DateTimeField(null=True, verbose_name=u'Дата удаления')
+    dd = models.DateTimeField(null=True, editable=False, verbose_name=u'Дата удаления')
 
     objects = ExcludeDeletedManager()
     standard_objects = models.Manager()
