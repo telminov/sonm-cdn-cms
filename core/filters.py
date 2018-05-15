@@ -7,5 +7,10 @@ class Asset(django_filters.FilterSet):
 
     class Meta:
         model = models.Asset
-        exclude = ['file']
+        fields = {
+            'dd': ['gte', ],
+            'uuid': ['exact', ],
+            'name': ['icontains', ],
+            'description': ['icontains', ]
+        }
 
