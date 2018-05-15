@@ -1,14 +1,13 @@
 # docker build -t gitlab.soft-way.biz:5010/sonm-cdn/cms .
 # docker push gitlab.soft-way.biz:5010/sonm-cdn/cms
 
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 RUN apt-get clean && apt-get update && \
     apt-get install -y \
-                    vim curl locales tzdata \
+                    vim curl locales \
                     supervisor python3-pip npm
 
-RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 RUN locale-gen ru_RU.UTF-8
 ENV LANG ru_RU.UTF-8
@@ -16,11 +15,11 @@ ENV LANGUAGE ru_RU:ru
 ENV LC_ALL ru_RU.UTF-8
 
 RUN ln -fs /usr/share/zoneinfo/Europe/Moscow /etc/localtime
-RUN dpkg-reconfigure --frontend noninteractive tzdata
 
 RUN pip3 install    django==2.0.5 \
                     django-bootstrap4==0.0.6 \
                     djangorestframework==3.8.2 \
+                    django_filter==1.1.0 \
                     gunicorn==19.8.0 \
                     ipython
 
