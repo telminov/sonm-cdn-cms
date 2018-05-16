@@ -17,8 +17,9 @@ class Asset(models.Model):
     dm = models.DateTimeField(auto_now=True)
     dd = models.DateTimeField(null=True, editable=False)
 
-    objects = ExcludeDeletedManager()
-    standard_objects = models.Manager()
+    # TODO мешает при получении удаленных данных через REST, подумать
+    # objects = ExcludeDeletedManager()
+    # standard_objects = models.Manager()
 
     def __str__(self):
         return self.name

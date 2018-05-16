@@ -14,11 +14,7 @@ class DownloadAsset(View):
     model = Asset
 
     def get(self, request, *args, **kwargs):
-        try:
-            asset = get_object_or_404(self.model, uuid=self.kwargs['uuid'])
-        except self.model.DoesNotExist:
-            raise self.model("No Asset matches the given query.")
-
+        asset = get_object_or_404(self.model, uuid=self.kwargs['uuid'], dd__isnull=True)
         asset_file_path = settings.MEDIA_ROOT + str(asset.file)
 
         if os.path.exists(asset_file_path):
