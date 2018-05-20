@@ -23,8 +23,8 @@ RUN pip3 install    django==2.0.5 \
                     gunicorn==19.8.0 \
                     ipython
 
-COPY . /opt/cms
-WORKDIR /opt/cms
+COPY . /opt/app
+WORKDIR /opt/app
 
 
 RUN cp project/local_settings.sample.py project/local_settings.py
@@ -32,7 +32,7 @@ RUN cp project/local_settings.sample.py project/local_settings.py
 COPY supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 COPY supervisor/prod.conf /etc/supervisor/conf.d/cms.conf
 
-WORKDIR /opt/cms
+WORKDIR /opt/app
 
 EXPOSE 80
 VOLUME /data/

@@ -11,7 +11,7 @@ class ExcludeDeletedManager(models.Manager):
 class Asset(models.Model):
     uuid = models.UUIDField('uuid', default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField(max_length=100)
-    description = models.TextField(max_length=240)
+    description = models.TextField(blank=True)
     file = models.FileField(upload_to='assets/', null=True, blank=True)
     dc = models.DateTimeField(auto_now_add=True)
     dm = models.DateTimeField(auto_now=True)
