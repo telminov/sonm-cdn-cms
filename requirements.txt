@@ -1,4 +1,6 @@
 django==2.0.5
 django-bootstrap4==0.0.6
 djangorestframework==3.8.2
-django-filter==1.1.0
+django_filter==1.1.0
+gunicorn==19.8.0
+ipython

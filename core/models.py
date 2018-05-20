@@ -15,11 +15,7 @@ class Asset(models.Model):
     file = models.FileField(upload_to='assets/', null=True, blank=True)
     dc = models.DateTimeField(auto_now_add=True)
     dm = models.DateTimeField(auto_now=True)
-    dd = models.DateTimeField(null=True, editable=False)
-
-    # TODO мешает при получении удаленных данных через REST, подумать
-    # objects = ExcludeDeletedManager()
-    # standard_objects = models.Manager()
+    dd = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.name
