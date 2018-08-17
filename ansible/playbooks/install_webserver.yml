@@ -1,0 +1,21 @@
+# ansible-playbook -i ansible/inventories/prod -u root -v ansible/playbooks/install_webserver.yml -e "service=cms service_port=8082"
+
+- name: Installation CMS
+  hosts: "{% if hosts is defined %}{{ hosts }}{% else %}{{ service }}{% endif %}"
+  become: true
+
+  vars:
+    container_name: "{{ service }}"
+    conf_path: "/var/docker/{{ container_name }}/conf"
+    web_server_name: "{{ container_name }}.service.consul"
+    tls_path: "/var/docker/{{ container_name }}/tls"
+
+  roles:
+    - role: ../roles/webserver
+      image_name: "dessanndes/sonm-{{ service }}" # FIXME вынес пока в общедоступник
+      data_path: "/var/docker/{{ container_name }}/data"
+      static_path: "/var/www/{{ container_name }}/static"
+      container_ports: 127.0.0.1:{{ service_port }}:{{ 80 }} # FIXME
+#      ssl_path: "/var/docker/{{ container_name }}/ssl"
+
+#    - role: ../roles/nginx_site_ssl
