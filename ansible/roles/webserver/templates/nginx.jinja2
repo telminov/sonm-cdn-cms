@@ -1,5 +1,6 @@
 server {
-    listen {{ web_server_name }}:443 ssl;
+{#    listen {{ web_server_name }}:443 ssl;#}
+{#    listen {{ service_port }};#}
     server_name {{ web_server_name }};
 {#    ssl_certificate /etc/nginx/ssl/{{ web_server_name }}.crt;#}
 {#    ssl_certificate_key /etc/nginx/ssl/{{ web_server_name }}.key;#}

@@ -7,7 +7,7 @@
   vars:
     container_name: "{{ service }}"
     conf_path: "/var/docker/{{ container_name }}/conf"
-    web_server_name: "{{ container_name }}.service.consul"
+    web_server_name: "{{ container_name }}.cdn.sonm.soft-way.biz"
     tls_path: "/var/docker/{{ container_name }}/tls"
 
   roles:
@@ -15,7 +15,7 @@
       image_name: "dessanndes/sonm-{{ service }}" # FIXME вынес пока в общедоступник
       data_path: "/var/docker/{{ container_name }}/data"
       static_path: "/var/www/{{ container_name }}/static"
-      container_ports: 127.0.0.1:{{ service_port }}:{{ 80 }} # FIXME
+      container_ports: 127.0.0.1:{{ service_port }}:{{ 8082 }} # FIXME
 #      ssl_path: "/var/docker/{{ container_name }}/ssl"
 
 #    - role: ../roles/nginx_site_ssl

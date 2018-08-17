@@ -8,6 +8,7 @@
   with_items:
     - "{{ data_path }}"
     - "{{ conf_path }}"
+    - "/var/log/www/{{ web_server_name }}"
 #    - "{{ ssl_path }}"
 
 - name: Create web static path
