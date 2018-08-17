@@ -86,4 +86,4 @@
   template: src=nginx.jinja2 dest="/etc/nginx/sites-enabled/{{ container_name }}"
 
 - name: Restart NGINX
-  shell: systemctl nginx restart
+  shell: systemctl restart nginx
