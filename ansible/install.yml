@@ -54,7 +54,7 @@
         name: sonm-cms
         pull: yes
         ports:
-          - 127.0.0.1:{{ service_port }}:{{ service_port }}
+          - 127.0.0.1:{{ service_port }}:80
         volumes:
           - "/data/sonm-cms:/data"
           - "/conf/sonm-cms:/conf"
