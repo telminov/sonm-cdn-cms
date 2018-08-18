@@ -1,9 +1,5 @@
 server {
-{#    listen {{ web_server_name }}:443 ssl;#}
-{#    listen {{ service_port }};#}
     server_name {{ web_server_name }};
-{#    ssl_certificate /etc/nginx/ssl/{{ web_server_name }}.crt;#}
-{#    ssl_certificate_key /etc/nginx/ssl/{{ web_server_name }}.key;#}
 
     access_log  /var/log/www/{{ web_server_name }}/access.log;
     error_log   /var/log/www/{{ web_server_name }}/error.log;
@@ -18,7 +14,7 @@ server {
     }
 
     location /static {
-        alias {{ static_path }};
+        alias /var/www/{{ service_name }}/static;
     }
 
 }
