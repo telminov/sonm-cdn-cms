@@ -1,9 +1,21 @@
-FROM python:3.6
+FROM ubuntu:18.04
+
+RUN apt-get clean && apt-get update && \
+    apt-get install -y \
+                    vim curl locales \
+                    supervisor python3-pip npm
+
+RUN locale-gen ru_RU.UTF-8
+ENV LANG ru_RU.UTF-8
+ENV LANGUAGE ru_RU:ru
+ENV LC_ALL ru_RU.UTF-8
+
+RUN ln -fs /usr/share/zoneinfo/Europe/Moscow /etc/localtime
 
 RUN mkdir /opt/app
 ADD . /opt/app
 WORKDIR /opt/app
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 RUN cp project/local_settings.sample.py project/local_settings.py
 
@@ -26,3 +38,4 @@ CMD test "$(ls /conf/local_settings.py)" || cp project/local_settings.sample.py 
     python3 ./manage.py collectstatic --noinput; \
 #    npm install; rm -rf static/node_modules; mv node_modules static/; \
     /usr/bin/supervisord -c /etc/supervisor/supervisord.conf --nodaemon
+
