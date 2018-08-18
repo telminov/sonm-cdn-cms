@@ -4,11 +4,6 @@
   hosts: all
 
   tasks:
-    - name: prepare install docker
-      shell: |
-        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-        sudo apt-key fingerprint 0EBFCD88
-        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
     - name: install packages
       apt:
@@ -16,7 +11,7 @@
         update_cache: yes
         cache_valid_time: 3600
       with_items:
-        - docker-ce
+        - docker.io
         - python-pip
         - nginx
 
@@ -25,15 +20,15 @@
         name: docker-py
         version: 1.10.6
 
-    - name: "remove old {{ service_name }} instance"
+    - name: remove old sonm-cms instance
       docker_container:
-        image: "dessanndes/sonm-{{ service_name }}"
-        name: "{{ service_name }}"
+        name: sonm-cms
+        image: dessanndes/sonm-cdn
         state: absent
 
     - name: create web-static directory
       file:
-        path: "/var/www/{{ service_name }}/static"
+        path: "/var/www/sonm-cms/static"
         state: directory
         owner: www-data
         group: www-data
@@ -41,7 +36,7 @@
 
     - name: create conf directory
       file:
-        path: "/conf/sonm-{{ service_name }}"
+        path: "/conf/sonm-cms"
         state: directory
         owner: www-data
         group: www-data
@@ -50,20 +45,20 @@
     - name: create settings
       template:
         src: local_settings.py.jinja2
-        dest: "/conf/sonm-{{ service_name }}/local_settings.py"
+        dest: "/conf/sonm-cms/local_settings.py"
         mode: 0600
 
-    - name: "start {{ service_name }}"
+    - name: start sonm-cms
       docker_container:
-        name: "{{ service_name }}"
-        image: "dessanndes/sonm-{{ service_name }}"
+        image: dessanndes/sonm-cms
+        name: sonm-cms
         pull: yes
         ports:
           - 127.0.0.1:{{ service_port }}:{{ service_port }}
         volumes:
-          - "/data/sonm-{{ service_name }}:/data"
-          - "/conf/sonm-{{ service_name }}:/conf"
-          - "/var/www/{{ service_name }}/static:/static"
+          - "/data/sonm-cms:/data"
+          - "/conf/sonm-cms:/conf"
+          - "/var/www/sonm-cms/static:/static"
 
     - name: remove nginx default
       file:
@@ -73,7 +68,7 @@
     - name: create nginx config
       template:
         src: nginx.jinja2
-        dest: "/etc/nginx/sites-enabled/{{ service_name }}"
+        dest: "/etc/nginx/sites-enabled/sonm-cms"
 
     - name: reload nginx
       service:
