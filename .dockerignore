@@ -4,3 +4,6 @@ db.sqlite3
 media/
 node_modules/
 project/local_settings.py
+venv
+ansible/venv
+ansible/inventory

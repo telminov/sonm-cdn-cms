@@ -23,16 +23,19 @@
     - name: remove old sonm-cms instance
       docker_container:
         name: sonm-cms
-        image: dessanndes/sonm-cdn
+        image: telminov/sonm-cdn
         state: absent
 
-    - name: create web-static directory
+    - name: create web directories
       file:
-        path: "/var/www/sonm-cms/static"
+        path: "{{ item }}"
         state: directory
         owner: www-data
         group: www-data
         recurse: yes
+      with_items:
+        - /var/www/sonm-cms/static
+        - "/var/log/www/{{ web_server_name }}"
 
     - name: create conf directory
       file:
@@ -50,7 +53,7 @@
 
     - name: start sonm-cms
       docker_container:
-        image: dessanndes/sonm-cms
+        image: telminov/sonm-cms
         name: sonm-cms
         pull: yes
         ports:

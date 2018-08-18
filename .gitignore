@@ -6,3 +6,6 @@ media/
 node_modules/
 project/local_settings.py
 *.retry
+venv
+ansible/venv
+ansible/inventory
