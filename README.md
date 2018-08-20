@@ -1,5 +1,5 @@
 # CSM
-Управление контентом CDN. CRUD + rest API, чтобы узлы CDN могли следить за обновлениями
+Content management CMS. CRUD + rest API to the CDN nodes can follow the updates
 
 ## Installation
 Install example on Digital Ocean instance with Ubuntu Server 18.04
